@@ -4,7 +4,7 @@ import { type } from '@testing-library/user-event/dist/type';
 import React from 'react';
 import update from 'immutability-helper';
 
-class App extends React.Component {
+export default class App extends React.Component {
   state = {
     isAddRecipeFormDisplayed: false,
     recipes: [],
@@ -85,12 +85,10 @@ class App extends React.Component {
           {
             this.state.recipes.length > 0 ?
             <ul id='cool-list'>
-              <li>{ this.state.recipes[0].name }</li>
-
               {
-                this.state.recipes.map((obj) => 
-                  <li>
-                    {obj.name}
+                this.state.recipes.map((obj, key) => 
+                  <li key={key}>
+                    <input type='button' onClick={alert('wow')} value={obj.name} / >
                   </li>
                 )
               }
@@ -103,4 +101,11 @@ class App extends React.Component {
   }
 }
 
-export default App;
+function Card({ obj }){
+
+  return(
+    <div>
+        <p> {obj.instructions} </p>
+    </div>
+  );
+}
