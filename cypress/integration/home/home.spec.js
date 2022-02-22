@@ -1,11 +1,13 @@
+/* eslint-disable no-undef */
 /* eslint-disable testing-library/prefer-screen-queries */
 /* eslint-disable testing-library/await-async-query */
-import cy from 'cypress';
+
 
 describe("Home page", () => {
     beforeEach(() => {
         cy.visit('/')
     })
+
     it("header contains recipe heading with a message that there are no recipes", () => {
       cy.findByRole('heading').should('contain', 'My Recipes')
       cy.get('p')
