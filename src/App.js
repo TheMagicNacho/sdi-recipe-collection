@@ -1,6 +1,8 @@
 //@ts-check
 // App.js
+import { type } from '@testing-library/user-event/dist/type';
 import React from 'react';
+import update from 'immutability-helper';
 
 class App extends React.Component {
   state = {
@@ -17,10 +19,6 @@ class App extends React.Component {
   }
 
 
-  toggleAddRecipeForm = () => {
-    this.setState({isAddRecipeFormDisplayed: !this.state.isAddRecipeFormDisplayed})
-  }
-
   handleRecipeInstructionsChange = (event) => {
     const value = event.target.value;
   
@@ -28,16 +26,30 @@ class App extends React.Component {
   }
 
 
+  toggleAddRecipeForm = () => {
+    this.setState({isAddRecipeFormDisplayed: !this.state.isAddRecipeFormDisplayed})
+
+  }
+
+
+
+
   
   submitRecipe = (event) => {
     event.preventDefault()
-    this.setState({recipes: [
-        {
-          name: this.state.newRecipeName,
-          instructions :this.state.newRecipeInstructions
-        }
-      ]
-    })
+
+    const temp = update(this.state.recipes, {$push: [
+      {
+        name: this.state.newRecipeName,
+        instructions :this.state.newRecipeInstructions
+      }
+    ]})
+
+    this.setState({recipes: temp})
+
+    this.setState({newRecipeName: ''});
+    this.setState({newRecipeInstructions: ''});
+
   }
 
     render(){
@@ -55,7 +67,8 @@ class App extends React.Component {
             placeholder="write recipe instructions here..."
             onChange={this.handleRecipeInstructionsChange}
             value={this.state.newRecipeInstructions} />
-          <input type="submit" />
+          <input type="Submit" value="Submit" />
+          
         </form>
       )
 
@@ -71,8 +84,16 @@ class App extends React.Component {
 
           {
             this.state.recipes.length > 0 ?
-            <ul>
+            <ul id='cool-list'>
               <li>{ this.state.recipes[0].name }</li>
+
+              {
+                this.state.recipes.map((obj) => 
+                  <li>
+                    {obj.name}
+                  </li>
+                )
+              }
             </ul> :
             <p>There are no recipes to list.</p>
           }
