@@ -48,13 +48,35 @@ describe("Home page", () => {
         cy.findByRole('button').click()
         cy.findByRole('textbox', {name: /Recipe name/i}).type(recipeName1)
         cy.findByRole('textbox', {name: /instructions/i}).type("1. Grab nuggies. 2. Shove in microwave 3. Shove in mouth");
-        cy.findByRole('button').click()
+        cy.get('#submit-recipe').click()
 
         cy.findByRole('textbox', {name: /Recipe name/i}).type(recipeName2)
         cy.findByRole('textbox', {name: /instructions/i}).type("1. heat a skillet on medium with a dollop of coconut oil {enter} 2. warm flour tortillas")
-        cy.findByRole('button').click()
+        cy.get('#submit-recipe').click()
 
         return cy.get('#cool-list').should('include.text', 'Nuggies' && 'Tacos')
+
+
+        
+            
+      })
+
+
+      it("displays recipe on hover", () => {
+        const recipeName1 = 'nuggs';
+        
+        cy.findByRole('button').click()
+        cy.findByRole('textbox', {name: /Recipe name/i}).type(recipeName1)
+        cy.findByRole('textbox', {name: /instructions/i}).type("TEST");
+        cy.get('#submit-recipe').click();
+
+        cy.get('.btn-secondary').trigger('mouseover');
+     
+
+        return cy.get('.sdi-tooltip').should('be.visible') 
+
+
+        
             
       })
 

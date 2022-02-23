@@ -67,14 +67,18 @@ export default class App extends React.Component {
             placeholder="write recipe instructions here..."
             onChange={this.handleRecipeInstructionsChange}
             value={this.state.newRecipeInstructions} />
-          <input type="Submit" value="Submit" />
+          <input id='submit-recipe' type="Submit" value="Submit" />
           
         </form>
       )
 
 
+
+
+
       return (
         <div className="App">
+          <img src="https://www.placecage.com/g/1000/500" className="img-fluid" alt="test"></img>
           <h1 className="App-header">My Recipes</h1>
           {
             this.state.isAddRecipeFormDisplayed
@@ -88,7 +92,13 @@ export default class App extends React.Component {
               {
                 this.state.recipes.map((obj, key) => 
                   <li key={key}>
-                    <input type='button' onClick={alert('wow')} value={obj.name} / >
+                    {/* <input type='button' value={obj.name} / > */}
+                    <button type="button" className="btn btn-secondary" data-bs-custom-class="sdi-tooltip" data-bs-toggle="tooltip" data-bs-placement="right" title={obj.instructions}>
+                      {obj.name}
+                    </button>
+
+
+          
                   </li>
                 )
               }
@@ -96,16 +106,12 @@ export default class App extends React.Component {
             <p>There are no recipes to list.</p>
           }
 
+          
+
+
+
         </div>
       )
   }
 }
 
-function Card({ obj }){
-
-  return(
-    <div>
-        <p> {obj.instructions} </p>
-    </div>
-  );
-}
