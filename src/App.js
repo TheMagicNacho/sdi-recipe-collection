@@ -3,6 +3,8 @@
 import { type } from '@testing-library/user-event/dist/type';
 import React from 'react';
 import update from 'immutability-helper';
+import $ from 'jquery';
+import { render } from '@testing-library/react';
 
 export default class App extends React.Component {
   state = {
@@ -29,6 +31,11 @@ export default class App extends React.Component {
   toggleAddRecipeForm = () => {
     this.setState({isAddRecipeFormDisplayed: !this.state.isAddRecipeFormDisplayed})
 
+  }
+
+
+  handleEdit() {
+    alert('neat');
   }
 
 
@@ -91,15 +98,7 @@ export default class App extends React.Component {
             <ul id='cool-list'>
               {
                 this.state.recipes.map((obj, key) => 
-                  <li key={key}>
-                    {/* <input type='button' value={obj.name} / > */}
-                    <button type="button" className="btn btn-secondary" data-bs-custom-class="sdi-tooltip" data-bs-toggle="tooltip" data-bs-placement="right" title={obj.instructions}>
-                      {obj.name}
-                    </button>
-
-
-          
-                  </li>
+                  <RecipeButton obj={obj} key={key} handler={this.handleEdit()} />
                 )
               }
             </ul> :
@@ -110,8 +109,26 @@ export default class App extends React.Component {
 
 
 
+
+
+
         </div>
       )
   }
 }
 
+
+
+function RecipeButton({ obj, key, handler }){
+
+  return(
+    <li key={key}>
+    {/* <input type='button' value={obj.name} / > */}
+    <button type="button" className="btn btn-secondary" data-bs-custom-class="sdi-tooltip" data-bs-toggle="tooltip" data-bs-placement="right" title={obj.instructions}>
+      {obj.name}
+    </button>
+  </li>
+
+
+  );
+}
